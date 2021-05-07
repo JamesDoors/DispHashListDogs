@@ -1,60 +1,73 @@
 import java.io.*;
 import java.time.LocalDate;
 
-public class Socio {
+public class Dogs {
 
     private int codigo;
+    private String raza;
     private String nombre;
+    private String duenio;
+    private LocalDate fechaNac;
     private int edad;
-    private LocalDate fecha;
+    private boolean vacunado;
     
-    /*public Socio(String nombre, int codigo, int edad, int dia, int mes, int anio) {
+    public Dogs(int codigo, String raza, String nombre, String duenio, String fechaNac, int edad, boolean vacunado) {
         this.codigo = codigo;
+        this.raza = raza;
         this.nombre = nombre;
+        this.duenio = duenio;
+        this.fechaNac = LocalDate.of(Integer.parseInt(fechaNac.split("/")[2]),
+                                  Integer.parseInt(fechaNac.split("/")[1]),
+                                  Integer.parseInt(fechaNac.split("/")[0]));
         this.edad = edad;
-        this.fecha = LocalDate.of(anio, mes, dia);
-    }*/
-
-    public Socio(String nombre, int codigo, int edad, String fecha) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.edad = edad;
-        this.fecha = LocalDate.of(Integer.parseInt(fecha.split("/")[2]),
-                                  Integer.parseInt(fecha.split("/")[1]),
-                                  Integer.parseInt(fecha.split("/")[0]));
+        this.vacunado = vacunado;
     }
 
-    public Socio() {
+    public Dogs() {
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
         try {
             do {
                 System.out.print("\n Código: ");
                 int codigo = Integer.parseInt(scan.readLine());
-                if (codigo<101 && codigo>1999) {
+                if (codigo<1001 && codigo>2000) {
                     System.out.println("El valor ingresado es incorrecto.");
                 }
                 else {
                     this.codigo = codigo;
                 }
-            } while (codigo<101 && codigo>1999);
+            } while (codigo<1001 && codigo>2000);
+            System.out.print("\n Raza: ");
+            this.raza = scan.readLine();
             System.out.print("\n Nombre: ");
             this.nombre = scan.readLine();
-            System.out.print("\n Edad: ");
-            this.edad = Integer.parseInt(scan.readLine());
+            System.out.print("\n Dueño: ");
+            this.duenio = scan.readLine();
             boolean fechaValida = false;
             do {
-                System.out.print("Fecha de Alta (Formato: dd/mm/aaaa): ");
-                String fechaAlta = scan.readLine();
-                fechaValida = validaFecha(fechaAlta);
+                System.out.print("Fecha de Nacimiento (Formato: dd/mm/aaaa): ");
+                String fecha = scan.readLine();
+                fechaValida = validaFecha(fecha);
                 if (!fechaValida) {
                     System.out.println("El valor ingresado es incorrecto.");
                 }
                 else {
-                    this.fecha = LocalDate.of(Integer.parseInt(fechaAlta.split("/")[2]),
-                                              Integer.parseInt(fechaAlta.split("/")[1]),
-                                              Integer.parseInt(fechaAlta.split("/")[0]));
+                    this.fechaNac = LocalDate.of(Integer.parseInt(fecha.split("/")[2]),
+                                              Integer.parseInt(fecha.split("/")[1]),
+                                              Integer.parseInt(fecha.split("/")[0]));
                 }
             } while (!fechaValida);
+            System.out.print("\n Edad: ");
+            this.edad = Integer.parseInt(scan.readLine());
+            System.out.println("¿Tiene todas las vacunas aplicadas?");
+            System.out.println("('1' para confirmar - '0' para cancelar)");
+            System.out.print("Opción: ");
+            int opcion = Integer.parseInt(scan.readLine());
+            if (opcion == 1) {
+                this.vacunado = true;
+            }
+            else {
+                this.vacunado = false;
+            }
         }
         catch (IOException e) {
             System.out.println(" Excepcion en la entrada de datos " +
@@ -70,6 +83,14 @@ public class Socio {
         this.codigo = codigo;
     }
 
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -77,7 +98,23 @@ public class Socio {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
+    public String getDuenio() {
+        return duenio;
+    }
+
+    public void setDuenio(String duenio) {
+        this.duenio = duenio;
+    }
+
+    public LocalDate getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(LocalDate fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
     public int getEdad() {
         return edad;
     }
@@ -86,16 +123,16 @@ public class Socio {
         this.edad = edad;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public boolean getVacunado() {
+        return vacunado;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setVcacunado(boolean vacunado) {
+        this.vacunado = vacunado;
     }
 
     public String toString() {
-        return "Socio => {" + "Código: " + codigo + ", Nombre: " + nombre + ", Edad: " + edad + ", Fecha: " + fecha + '}';
+        return "Perro => {" + "Código: " + codigo + ", Raza: " + raza + ", Nombre: " + nombre + ", Dueño: " + duenio + ", Fecha de Nac.: " + fechaNac + ", Edad: " + edad + ", Vacunado?: " + vacunado + '}';
     }
 
     static boolean validaFecha(String fecha) {
@@ -111,7 +148,6 @@ public class Socio {
         catch (Exception e) {
             valido = false;
         }
-        
         return valido;
     }
 };

@@ -1,13 +1,13 @@
-public class Elemento {
-    Socio socio;
-    Elemento sgte;
+public class Element {
+    Dogs dog;
+    Element sgte;
     
-    public Elemento(Socio e) {
-        socio = e;
+    public Element(Dogs d) {
+        dog = d;
         sgte = null;
     }
     
-    public Socio getSocio() {
-        return socio;
+    public Dogs getDog() {
+        return dog;
     }
 };

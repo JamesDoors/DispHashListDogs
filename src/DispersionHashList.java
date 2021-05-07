@@ -1,14 +1,14 @@
 import java.io.*;
 
-public class TablaDispersaEnlazada {
+public class DispersionHashList {
     
     private static final double R = 0.618034;
     private static int M = 97;
-    private Elemento[] tabla;
+    private Element[] tabla;
     private int numElementos;
 
-    public TablaDispersaEnlazada() {
-        tabla = new Elemento[M];
+    public DispersionHashList() {
+        tabla = new Element[M];
         for (int k = 0; k < M; k++)
         tabla[k] = null;
         numElementos = 0;
@@ -26,19 +26,19 @@ public class TablaDispersaEnlazada {
         return v;
     }
 
-    public void insertar(Socio s) {
+    public void insertar(Dogs d) {
         int posicion;
-        Elemento nuevo;
-        posicion = dispersion(s.getCodigo());
-        nuevo = new Elemento(s);
+        Element nuevo;
+        posicion = dispersion(d.getCodigo());
+        nuevo = new Element(d);
         nuevo.sgte = tabla[posicion];
         tabla[posicion] = nuevo;
         numElementos++;
     }
 
-    boolean conforme(Socio a) throws NumberFormatException, IOException {
+    boolean conforme(Dogs d) throws NumberFormatException, IOException {
         BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println(a.toString());
+        System.out.println(d.toString());
         System.out.println("¿Confirma que desea eliminar este socio?");
         System.out.println("('1' para confirmar - '0' para cancelar)");
         System.out.print("Opción: ");
@@ -55,18 +55,18 @@ public class TablaDispersaEnlazada {
         int posicion;
         posicion = dispersion(codigo);
         if (tabla[posicion] != null) {// no está vacía
-            Elemento anterior, actual;
+            Element anterior, actual;
             anterior = null;
             actual = tabla[posicion];
-            while ((actual.sgte != null) && (actual.getSocio().getCodigo() != codigo)) {
+            while ((actual.sgte != null) && (actual.getDog().getCodigo() != codigo)) {
                 anterior = actual;
                 actual = actual.sgte;
             }
-            if (actual.getSocio().getCodigo() != codigo) {
-                System.out.println("No se encuentra en la tabla el socio "+ codigo);
+            if (actual.getDog().getCodigo() != codigo) {
+                System.out.println("No se encuentra en la tabla el perro "+ codigo);
             }
             else {
-                if (conforme (actual.getSocio())) {//se retira el nodo
+                if (conforme (actual.getDog())) {//se retira el nodo
                     if (anterior == null) {// primer nodo
                         tabla[posicion] = actual.sgte;
                     }
@@ -75,28 +75,28 @@ public class TablaDispersaEnlazada {
                         actual = null;
                     }
                     numElementos--;
-                    System.out.println("El socio fue eliminado.");
+                    System.out.println("El perro fue eliminado.");
                 }
                 else {
-                    System.out.println("Se canceló la eliminación del socio.");
+                    System.out.println("Se canceló la eliminación del perro.");
                 }
             } 
         }
         else {
-            System.out.println("No se encuentra en la tabla el socio "+ codigo);
+            System.out.println("No se encuentra en la tabla el perro "+ codigo);
         }
     }
 
-    public Elemento buscar(int codigo) {
-        Elemento p = null;
+    public Element buscar(int codigo) {
+        Element p = null;
         int posicion;
         posicion = dispersion(codigo);
         if (tabla[posicion] != null) {
             p = tabla[posicion];
-            while ((p.sgte != null) && p.socio.getCodigo() != codigo) {
+            while ((p.sgte != null) && p.dog.getCodigo() != codigo) {
                 p = p.sgte;
             }
-            if (p.socio.getCodigo() != codigo) {
+            if (p.dog.getCodigo() != codigo) {
                 p = null;
             }
         }
